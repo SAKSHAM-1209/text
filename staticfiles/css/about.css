@@ -1,0 +1,177 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: #fff;
+  color: #111;
+  line-height: 1.6;
+}
+
+/* About Header */
+.about-header {
+    position: relative;
+    height: 400px; /* thoda bada kar diya */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.about-header .about-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* image cover kare section ko */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.about-header .overlay {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    background: rgba(0,0,0,0.0); /* fully transparent */
+    padding: 20px;
+    border-radius: 0; /* remove rounded rectangle */
+}
+
+
+
+.about-header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.about-header p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media(max-width: 768px) {
+    .about-header {
+        height: 350px;
+    }
+    .about-header h1 {
+        font-size: 1.8rem;
+    }
+    .about-header p {
+        font-size: 0.95rem;
+        padding: 0 15px;
+    }
+}
+
+@media(max-width: 480px) {
+    .about-header {
+        height: 300px;
+    }
+    .about-header h1 {
+        font-size: 1.5rem;
+    }
+    .about-header p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mission Section */
+.mission-section {
+  padding: 60px 20px;
+}
+
+.mission-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 15px;
+  /* text aur image paas */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mission-text {
+  flex: 1 1 45%;
+  text-align: center;
+  /* paragraph center me */
+}
+
+.mission-text h2 {
+  font-size: 2.5rem;
+  /* heading bada */
+  margin-bottom: 15px;
+  color: #111;
+}
+
+.mission-text p {
+  font-size: 1.2rem;
+  color: #444;
+  margin-top: 0;
+}
+
+.mission-image {
+  flex: 1 1 45%;
+  text-align: center;
+}
+
+.mission-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+@media(max-width: 900px) {
+  .mission-section {
+    padding: 40px 15px;
+  }
+
+  .mission-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .mission-text,
+  .mission-image {
+    flex: 1 1 100%;
+  }
+
+  .mission-text h2 {
+    font-size: 2rem;
+  }
+
+  .mission-text p {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .mission-image img {
+    width: 80%;
+    max-width: 400px;
+  }
+}
+
+@media(max-width: 480px) {
+  .mission-text h2 {
+    font-size: 1.6rem;
+  }
+
+  .mission-text p {
+    font-size: 0.95rem;
+  }
+
+  .mission-image img {
+    width: 90%;
+    max-width: 300px;
+  }
+}

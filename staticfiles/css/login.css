@@ -1,0 +1,251 @@
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: #f5f7fa;
+  color: #111827;
+  line-height: 1.5;
+}
+
+/* =====================================
+   🔹 LOGIN CONTAINER
+===================================== */
+.login-container {
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  padding: 35px 30px;
+  border-radius: 16px;
+  max-width: 380px;
+  margin: 70px auto;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* User Icon */
+.login-container img {
+  width: 65px;
+  height: 65px;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  border-radius: 50%;
+  padding: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container img:hover {
+  transform: scale(1.12) rotate(6deg);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  cursor: pointer;
+}
+
+/* Headings */
+.login-container h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.login-container p {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 22px;
+}
+
+/* Labels & Inputs */
+.login-container label {
+  display: block;
+  text-align: left;
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+}
+
+.login-container input {
+  width: 100%;
+  padding: 11px 13px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.login-container input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.5);
+}
+
+.login-container input:hover {
+  border-color: #2563eb;
+  background-color: #f0f7ff;
+}
+
+/* Forgot Password only */
+.remember-forgot {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+}
+
+.remember-forgot a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
+/* Sign-In Button */
+.sign-in {
+  width: 100%;
+  padding: 11px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(45deg, #2563eb, #1e40af);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sign-in:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #d1d5db;
+}
+
+.divider:not(:empty)::before {
+  margin-right: 0.6em;
+}
+
+.divider:not(:empty)::after {
+  margin-left: 0.6em;
+}
+
+/* Social Buttons */
+.social-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.social-btns button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 0;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-btns .google {
+  background: #DB4437;
+}
+
+.social-btns .facebook {
+  background: #4267B2;
+}
+
+.social-btns button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* =====================================
+   🔹 RESPONSIVE
+===================================== */
+@media (max-width: 768px) {
+  .header {
+    position: static !important;
+    box-shadow: none !important;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .login-container {
+    margin: 30px 15px;
+    padding: 25px 20px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-section {
+    padding: 20px 10px;
+  }
+
+  .login-container {
+    margin: 20px 10px;
+    padding: 25px 18px;
+  }
+
+  .login-container h2 {
+    font-size: 1.4rem;
+  }
+
+  .login-container p {
+    font-size: 0.85rem;
+  }
+
+  .social-btns {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .social-btns button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,126 @@
+/* ---------- Reset ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #f8fafc, #e0e7ff);
+  color: #111827;
+  min-height: 100vh;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ---------- FORM CARD ---------- */
+.schedule-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+.schedule-card {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  padding: 40px 30px;
+  animation: slideUp 0.8s ease-out;
+}
+
+.schedule-card h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* ---------- Floating Labels ---------- */
+.form-group {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 16px 14px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 15px;
+  background: #fff;
+  color: #111827;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: black;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  outline: none;
+  transform: scale(1.01);
+}
+
+label {
+  position: absolute;
+  left: 14px;
+  top: 16px;
+  color: #6b7280;
+  font-size: 15px;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  background: #fff;
+  padding: 0 4px;
+}
+
+input:focus + label,
+textarea:focus + label,
+select:focus + label,
+input:not(:placeholder-shown) + label,
+textarea:not(:placeholder-shown) + label,
+select:not([value=""]) + label {
+  top: -10px;
+  left: 12px;
+  font-size: 12px;
+  color: black;
+  font-weight: 600;
+}
+
+/* ---------- Submit Button ---------- */
+.btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn:hover {
+  background: black(135deg, #1e40af, #1d4ed8);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px black;
+}
+
+/* ---------- Animations ---------- */
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .schedule-card {
+    padding: 24px 20px;
+  }
+  .schedule-card h2 {
+    font-size: 24px;
+  }
+}
