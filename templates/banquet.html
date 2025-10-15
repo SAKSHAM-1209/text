@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banquet Coming Soon</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/banquet.css' %}">
+</head>
+<body>
+
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="page-wrapper">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">Find My Banquet</div>
+        <nav class="nav">
+          <a href="{% url 'landing' %}">Home</a>
+          <a href="{% url 'banquet' %}">Banquets</a>
+          <a href="{% url 'about' %}">About</a>
+          <a href="{% url 'contact' %}">Contact</a>
+        </nav>
+        <div class="auth-btns">
+          <a href="{% url 'login' %}" class="login">Login</a>
+          <a href="{% url 'signup' %}" class="signup">Sign Up</a>
+          <a href="{% url 'schedule_call' %}" class="schedule-call">Schedule Call</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main-content">
+      <section class="coming-soon-section">
+        <div class="banquet-card">
+          <h1 class="banquet-title">Banquet Listings Coming Soon!</h1>
+          <p class="banquet-text">We are preparing our premium banquet listings. Stay tuned and register your banquet now!</p>
+          <a href="{% url 'register_banquet' %}" class="banquet-btn">Register Now →</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    {% include 'footer.html' %}
+    <script src="{% static 'js/banquet.js' %}"></script>
+
+  </div>
+</body>
+</html>

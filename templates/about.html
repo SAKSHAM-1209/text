@@ -1,0 +1,72 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Find My Banquet</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/about.css' %}">
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+</head>
+<body>
+
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo">Find My Banquet</div>
+    <nav class="nav">
+      <a href="{% url 'landing' %}">Home</a>
+      <a href="{% url 'banquet' %}">Banquets</a>
+      <a href="{% url 'about' %}">About</a>
+      <a href="{% url 'contact' %}">Contact</a>
+    </nav>
+    <div class="auth-btns">
+      <a href="{% url 'login' %}" class="login">Login</a>
+      <a href="{% url 'signup' %}" class="signup">Sign Up</a>
+      <a href="{% url 'schedule_call' %}" class="schedule-call">Schedule Call</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== ABOUT HEADER ===== -->
+<section class="about-header">
+  <img src="{% static 'images/BUILDING IMAGE.jpg' %}" alt="Banquet Hall" class="about-image">
+  <div class="overlay">
+    <h1>About Find My Banquet</h1>
+    <p>We're on a mission to make finding and booking the perfect banquet hall simple, transparent, and stress-free for every celebration.</p>
+  </div>
+</section>
+
+<!-- ===== MISSION SECTION ===== -->
+<section class="mission-section">
+  <div class="mission-container">
+    <div class="mission-text">
+      <h2>Our Mission</h2>
+      <p>
+        At Find My Banquet, our mission is to make finding and booking banquet halls effortless, transparent, and stress-free. We believe every celebration—whether a wedding, birthday, corporate event, or family gathering—deserves the perfect venue.
+        That’s why we combine smart technology with personalized support, ensuring that you not only discover the right options but also make confident choices with ease.
+        Our goal is simple: to help you focus on creating beautiful memories while we simplify the venue search for you.
+      </p>
+    </div>
+    <div class="mission-image">
+      <img src="{% static 'images/about.jpg' %}" alt="Banquet Celebration">
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+{% include 'footer.html' %}
+<script src="{% static 'js/about.js' %}"></script>
+</body>
+</html>

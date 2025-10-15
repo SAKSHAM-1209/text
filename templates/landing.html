@@ -1,0 +1,279 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find My Banquet</title>
+
+  <!-- ===== CSS LINKS ===== -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+
+  <style>
+    /* ===== Notification Messages ===== */
+    .messages {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      max-width: 600px;
+      text-align: center;
+      z-index: 200;
+    }
+    @media (max-width: 768px) {
+      .messages {
+        width: 90%;
+        top: 10px;
+        position: relative;
+        margin: 10px auto;
+      }
+    }
+    .message {
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 16px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: all 0.5s ease;
+      opacity: 1;
+    }
+    .message.success { background-color: #d4edda; color: #155724; border-left: 5px solid #28a745; }
+    .message.error   { background-color: #f8d7da; color: #721c24; border-left: 5px solid #dc3545; }
+    .message.info    { background-color: #cce5ff; color: #004085; border-left: 5px solid #007bff; }
+    .message.fade-out { opacity: 0; transform: translateY(-20px); }
+.search-form input,
+.search-form select {
+    flex: 1 1 150px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+    color: #111;
+    font-size: 1rem;
+}
+/* Remove spinner for number inputs in Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove spinner for Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield; /* Modern browsers fallback */
+}
+/* ===== RESPONSIVE ===== */
+@media screen and (max-width: 480px) {
+  .search-form-wrapper {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .search-form {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .search-form .line {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-form input,
+  .search-form select,
+  .search-form button {
+    flex: 1 1 7%; /* 👈 width expand control */
+    width: 100%;
+    height: 36px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+
+  .search-btn {
+    margin-top: 6px;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+}
+
+
+
+  </style>
+</head>
+
+<body>
+  <!-- ===== Notifications ===== -->
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">Find My Banquet</div>
+      <nav class="nav">
+        <a href="{% url 'landing' %}">Home</a>
+        <a href="{% url 'banquet' %}">Banquets</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+      </nav>
+      <div class="auth-btns">
+        <a href="{% url 'login' %}" class="login">Login</a>
+        <a href="{% url 'signup' %}" class="signup">Sign Up</a>
+        <a href="{% url 'schedule_call' %}" class="schedule-call">Schedule Call</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero-slider">
+    <!-- Slider Images -->
+    <div class="slider">
+      <div class="slide active"><img src="{% static 'images/1_pic.jpg' %}" alt="Banquet 1"></div>
+      <div class="slide"><img src="{% static 'images/2_pic.jpg' %}" alt="Banquet 2"></div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="hero-overlay"></div>
+
+    <!-- Hero Content -->
+    <div class="container hero-content">
+      <h1>Search | Select <span>| Celebrate</span></h1>
+      <p>Discover stunning venues for weddings, corporate events, and celebrations. Book the perfect space for your special moments.</p>
+
+      <!-- ✅ Search Form (Original Structure) -->
+      <div class="search-form-wrapper">
+        <form class="search-form">
+          <input type="text" placeholder="Locality" required>
+          <input type="date" placeholder="Date" required>
+          <input type="number" placeholder="Number of Guests" required>
+          <select required>
+            <option value="" disabled selected>Type of Function</option>
+            <option value="marriage">Marriage</option>
+            <option value="engagement">Engagement</option>
+            <option value="birthday">Birthday Party</option>
+            <option value="corporate">Corporate Event</option>
+            <option value="other">Other</option>
+          </select>
+         <input type="text" placeholder="Budget (₹)" inputmode="numeric" required>
+
+          <button type="submit" class="search-btn">Submit</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="features">
+    <h2 class="title">Why Choose Find My Banquet?</h2>
+    <p class="subtitle">We make finding and booking the perfect venue simple and stress-free</p>
+    <div class="features-container">
+      <div class="feature-card">
+        <div class="icon bg-blue"><i class="fas fa-search"></i></div>
+        <h3>Easy Search</h3>
+        <p>Find venues by location, capacity, budget, and amenities.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon bg-yellow"><i class="fas fa-star"></i></div>
+        <h3>Verified Venues</h3>
+        <p>All venues are verified and rated by real customers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon bg-green"><i class="fas fa-calendar-check"></i></div>
+        <h3>Instant Booking</h3>
+        <p>Book instantly with our secure system.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon bg-pink"><i class="fas fa-clock"></i></div>
+        <h3>Save Time & Effort</h3>
+        <p>Quick booking process designed to save your valuable time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon bg-purple"><i class="fas fa-chart-bar"></i></div>
+        <h3>Easy Comparison</h3>
+        <p>Compare venues easily based on price, facilities, and reviews.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMING SOON ===== -->
+  <section class="coming-soon-section">
+    <div class="coming-soon-card">
+      <h1 class="venue-name">Coming Soon!</h1>
+      <p>Register your banquet with us! Don’t miss your chance to be featured!</p>
+      <button class="notify-btn">Notify Me</button>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Register Your Banquet</h2>
+      <p>Get listed on our platform and start receiving bookings from customers.</p>
+      <a href="{% url 'register_banquet' %}" class="cta-btn">Register Now →</a>
+      <p class="cta-note">*No hidden fees, start today!*</p>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  {% include 'footer.html' %}
+
+  <!-- ===== JS ===== -->
+  <script src="{% static 'js/landing.js' %}"></script>
+
+  <!-- ===== Notifications Fade-Out ===== -->
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const messages = document.querySelectorAll(".message");
+      messages.forEach((msg) => {
+        setTimeout(() => msg.classList.add("fade-out"), 4000);
+        msg.addEventListener("transitionend", () => msg.remove());
+      });
+    });
+  </script>
+
+  <!-- ===== Slider JS ===== -->
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    let current = 0;
+    let slideInterval = null;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.opacity = i === index ? 1 : 0;
+        slide.style.zIndex = i === index ? 1 : 0;
+      });
+    }
+
+    function startSlider() {
+      slideInterval = setInterval(() => {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+      }, 3000);
+    }
+
+    function stopSlider() {
+      clearInterval(slideInterval);
+    }
+
+    showSlide(current);
+    startSlider();
+
+    slides.forEach((slide) => {
+      slide.addEventListener("mouseenter", stopSlider);
+      slide.addEventListener("mouseleave", startSlider);
+    });
+  </script>
+</body>
+</html>

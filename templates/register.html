@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banquet Registration | Find My Banquet</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ===== Messages / Notifications ===== */
+    .messages {
+      width: 50%;
+      margin: 20px auto 30px auto;
+      text-align: center;
+      position: relative;
+      z-index: 1000;
+    }
+    .message {
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 16px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: all 0.5s ease, opacity 0.5s ease;
+      opacity: 1;
+    }
+    .message.success { background-color: #d4edda; color: #155724; border-left: 5px solid #28a745; }
+    .message.error   { background-color: #f8d7da; color: #721c24; border-left: 5px solid #dc3545; }
+    .message.info    { background-color: #cce5ff; color: #004085; border-left: 5px solid #007bff; }
+    .fade-out { opacity: 0; height: 0; padding: 0; margin: 0; overflow: hidden; }
+
+    /* ===== Form ===== */
+    .register-section { padding: 40px 0; background-color: #f9f9f9; }
+    .register-container { max-width: 700px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+    .form-title { text-align: center; margin-bottom: 25px; font-size: 28px; }
+    .form-group { margin-bottom: 18px; display: flex; flex-direction: column; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .form-group label { margin-bottom: 6px; font-weight: 500; }
+    .form-input { width: 100%; }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-block;
+      background-color: #28a745;
+      color: #fff;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover { background-color: #218838; }
+
+    /* ===== Multiple image preview ===== */
+    #image-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    #image-preview img {
+      width: 100px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    /* ===== Custom File Input Instructions ===== */
+    .custom-file-label { display: block; font-weight: 500; margin-bottom: 5px; }
+    .file-instructions { font-size: 0.9em; color: #555; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ===== MESSAGES ===== -->
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">Find My Banquet</div>
+      <nav class="nav">
+        <a href="{% url 'landing' %}">Home</a>
+        <a href="{% url 'banquet' %}">Banquets</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+      </nav>
+      <div class="auth-btns">
+        <a href="{% url 'login' %}" class="login">Login</a>
+        <a href="{% url 'signup' %}" class="signup">Sign Up</a>
+        <a href="{% url 'schedule_call' %}" class="schedule-call">Schedule Call</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== REGISTER FORM ===== -->
+  <section class="register-section">
+    <div class="container register-container">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <h1 class="form-title">Register Your Banquet</h1>
+
+        {% for field in form %}
+          <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+          </div>
+        {% endfor %}
+
+        <!-- Multiple Images Upload -->
+        <div class="form-group">
+          <label for="id_image" class="custom-file-label">
+            Upload Images
+            <span class="file-instructions" id="file-instructions-text"></span>
+          </label>
+          <input type="file" name="image" id="id_image" multiple class="form-input">
+          <div id="image-preview"></div>
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+      </form>
+    </div>
+  </section>
+
+  {% include 'footer.html' %}
+
+  <script>
+    // ===== Adaptive file instructions =====
+    const fileInput = document.getElementById('id_image');
+    const instructionsText = document.getElementById('file-instructions-text');
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    instructionsText.textContent = isMobile 
+      ? 'Tap to select multiple images' 
+      : 'Hold Ctrl / Shift to select multiple images';
+
+    // ===== Multiple image preview =====
+    const previewContainer = document.getElementById('image-preview');
+    fileInput.addEventListener('change', function() {
+      previewContainer.innerHTML = '';
+      const files = fileInput.files;
+      if(files){
+        Array.from(files).forEach(file => {
+          const reader = new FileReader();
+          reader.onload = e => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            previewContainer.appendChild(img);
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    });
+
+    // ===== Auto fade-out messages =====
+    const messages = document.querySelectorAll('.message');
+    messages.forEach(msg => {
+      setTimeout(() => { msg.classList.add('fade-out'); }, 4000);
+    });
+  </script>
+
+</body>
+</html>

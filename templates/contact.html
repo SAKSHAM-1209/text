@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Find My Banquet</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/landing.css' %}"> <!-- Header/Footer -->
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}"> <!-- Contact Form -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+
+<!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">Find My Banquet</div>
+    <nav class="nav">
+      <a href="{% url 'landing' %}">Home</a>
+      <a href="{% url 'banquet' %}">Banquets</a>
+      <a href="{% url 'about' %}">About</a>
+      <a href="{% url 'contact' %}">Contact</a>
+    </nav>
+    <div class="auth-btns">
+      <a href="{% url 'login' %}" class="login">Login</a>
+      <a href="{% url 'signup' %}" class="signup">Sign Up</a>
+      <a href="{% url 'schedule_call' %}" class="schedule-call">Schedule Call</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== CONTACT HEADER ===== -->
+<section class="contact-header">
+  <h1>Contact Us</h1>
+  <p>Get in touch with our team. We're here to help you find the perfect venue for your special occasion.</p>
+</section>
+
+<!-- ===== CONTACT CONTAINER ===== -->
+<section class="contact-container container">
+  
+  <!-- Contact Info -->
+  <div class="contact-info">
+    <h2>Get in Touch</h2>
+   
+
+    <div class="info-item">
+      <div class="icon-box"> <i class="fas fa-phone"></i></div>
+      <div>
+        <h3>Phone</h3>
+        <p>+91 76785 12151</p>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="icon-box"><i class="fas fa-envelope"></i></div>
+      <div>
+        <h3>Email</h3>
+        <p>Info@findmybanquet.com</p>
+      </div>
+    </div>
+    <div class="social-links">
+      <h3>Follow Us</h3>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="contact-form">
+    <h2>Send a Message</h2>
+    <form method="POST" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="form-row">
+        {{ form.full_name }}
+        {{ form.email }}
+      </div>
+      <div class="form-row">
+        {{ form.phone }}
+        {{ form.subject }}
+      </div>
+      <div class="form-row">
+        {{ form.message }}
+      </div>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+</section>
+
+<!-- ===== FOOTER ===== -->
+{% include 'footer.html' %}
+<script src="{% static 'js/contact.js' %}"></script>
+</body>
+</html>

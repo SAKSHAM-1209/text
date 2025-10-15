@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Find My Banquet</title>
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+    #ownerFields { display: none; flex-direction: column; gap: 10px; }
+    .field-error { color: #d32f2f; font-size: 0.875rem; margin-top: 4px; }
+    .messages { margin: 10px 0; }
+    .message { padding: 8px 12px; border-radius: 5px; margin-bottom: 5px; }
+    .message.error { background-color: #f8d7da; color: #842029; }
+    .message.success { background-color: #d1e7dd; color: #0f5132; }
+
+    /* Password toggle button */
+    .password-wrapper { position: relative; }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+  </head>
+  <body>
+
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+      <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">Find My Banquet</div>
+        <nav class="nav">
+          <a href="{% url 'landing' %}">Home</a>
+          <a href="{% url 'banquet' %}">Banquets</a>
+          <a href="{% url 'about' %}">About</a>
+          <a href="{% url 'contact' %}">Contact</a>
+        </nav>
+        <div class="auth-btns">
+          <a href="{% url 'login' %}" class="login">Login</a>
+          <a href="{% url 'signup' %}" class="signup">Sign Up</a>
+          <a href="{% url 'schedule_call' %}" class="schedule-call">Schedule
+            Call</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== SIGNUP HERO ===== -->
+    <section class="signup-hero">
+      <div class="signup-wrapper">
+        <div class="signup-card">
+          <div class="icon-circle">👤+</div>
+          <h2>Create Your Account</h2>
+          <p>Join Find My Banquet and discover perfect venues</p>
+
+          <!-- Role Selection -->
+          <div class="role-selection">
+            <button type="button" id="findVenueBtn" class="role-btn active">
+              <div class="role-icon">🔍</div>
+              <div><strong>Find Venues</strong><br><small>Book banquet halls for
+                  events</small></div>
+            </button>
+            <button type="button" id="listVenueBtn" class="role-btn">
+              <div class="role-icon">🏢</div>
+              <div><strong>List My Venue</strong><br><small>Rent out my banquet
+                  hall</small></div>
+            </button>
+          </div>
+
+          <!-- Signup Form -->
+          <form id="signupForm" method="POST" enctype="multipart/form-data"
+            novalidate>
+            {% csrf_token %}
+
+            <!-- First Name -->
+            <div class="form-group">
+              {{ form.first_name }}
+              {% if form.first_name.errors %}
+              <div class="field-error">{{ form.first_name.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+              {{ form.last_name }}
+              {% if form.last_name.errors %}
+              <div class="field-error">{{ form.last_name.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+              {{ form.username }}
+              {% if form.username.errors %}
+              <div class="field-error">{{ form.username.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              {{ form.email }}
+              {% if form.email.errors %}
+              <div class="field-error">{{ form.email.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Password -->
+            <div class="form-group password-wrapper">
+              <input type="password" name="{{ form.password1.name }}"
+                class="form-input" placeholder="Password" id="id_password1">
+              <button type="button" class="toggle-password"
+                data-target="id_password1">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+              {% if form.password1.errors %}
+              <div class="field-error">{{ form.password1.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group password-wrapper">
+              <input type="password" name="{{ form.password2.name }}"
+                class="form-input" placeholder="Confirm Password"
+                id="id_password2">
+              <button type="button" class="toggle-password"
+                data-target="id_password2">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+              {% if form.password2.errors %}
+              <div class="field-error">{{ form.password2.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Owner Fields -->
+            <div id="ownerFields">
+              <input type="text" name="venue_name"
+                placeholder="Banquet / Venue Name" class="form-input">
+              <input type="text" name="venue_address"
+                placeholder="Venue Address" class="form-input">
+              <input type="number" name="venue_capacity" placeholder="Capacity"
+                class="form-input">
+              <input type="number" name="venue_price" placeholder="Price (INR)"
+                class="form-input">
+            </div>
+
+            <!-- Terms -->
+            <div class="terms">
+              <input type="checkbox" id="agreeTerms" required>
+              <label for="agreeTerms">I agree to the <a href="#">Terms &
+                  Conditions</a></label>
+            </div>
+
+            <button type="submit" class="btn-submit">Create Account</button>
+          </form>
+
+          <!-- Social Login -->
+          <div class="social-login">
+            <p>Or sign up with</p>
+            <div class="social-buttons">
+              <button class="google-login"><i class="fab fa-google"></i>
+                Google</button>
+              <button class="facebook-login"><i class="fab fa-facebook-f"></i>
+                Facebook</button>
+            </div>
+          </div>
+
+          <p class="login-link">Already have an account? <a
+              href="{% url 'login' %}">Login</a></p>
+        </div>
+      </div>
+    </section>
+
+    {% include 'footer.html' %}
+
+   <script>
+  // ===== Role Selection =====
+  const findBtn = document.getElementById('findVenueBtn');
+  const listBtn = document.getElementById('listVenueBtn');
+  const ownerFields = document.getElementById('ownerFields');
+
+  findBtn.addEventListener('click', () => {
+    findBtn.classList.add('active');
+    listBtn.classList.remove('active');
+    ownerFields.style.display = 'none';
+  });
+
+  listBtn.addEventListener('click', () => {
+    listBtn.classList.add('active');
+    findBtn.classList.remove('active');
+    ownerFields.style.display = 'flex';
+  });
+
+  // ===== Password Toggle =====
+  const toggleButtons = document.querySelectorAll('.toggle-password');
+  toggleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      const icon = btn.querySelector('i'); // eye icon
+      if (target.type === 'password') {
+        target.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        target.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+  });
+</script>
+
+
+
+  </body>
+</html>

@@ -1,0 +1,56 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# ===== Django =====
+*.log
+/staticfiles/
+media/
+*.pot
+*.mo
+
+# ===== SQLite DB =====
+*.sqlite3
+db.sqlite3
+
+# ===== Environment / Virtual Envs =====
+.env
+venv/
+ENV/
+env/
+.venv/
+
+# ===== IDE / Editor =====
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ===== OS Specific =====
+.DS_Store
+Thumbs.db
+
+# ===== Coverage / Test =====
+.coverage
+htmlcov/
+*.cover
+*.py,cover
+*.log
+nosetests.xml
+coverage.xml
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+
+# ===== Node / Frontend (if any) =====
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# ===== Misc =====
+*.bak
+*.swp

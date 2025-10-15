@@ -1,0 +1,1 @@
+web: gunicorn Banquet.wsgi
