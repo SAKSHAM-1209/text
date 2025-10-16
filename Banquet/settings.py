@@ -2,34 +2,31 @@
 
 from pathlib import Path
 import os
-import dj_database_url
 from dotenv import load_dotenv
+import dj_database_url
 
 # ===== BASE DIR =====
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ===== LOAD .env =====
 load_dotenv(os.path.join(BASE_DIR, '.env'))
-
 # ===== SECURITY =====
-SECRET_KEY = os.getenv(
-    'SECRET_KEY',
-    'dev-only-key-change-in-production-1234567890abcdefghijklmnopqrstuvwxyz'
-)
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # ===== ENVIRONMENT & DEBUG =====
-ENVIRONMENT = os.getenv('ENVIRONMENT', 'local').lower()
-DEBUG = os.getenv('DEBUG', '1' if ENVIRONMENT == 'local' else '0').lower() in ['1', 'true', 'yes']
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'local').lower()  # Default to local if not set
+DEBUG = os.getenv('DEBUG', '1').lower() in ['1', 'true', 'yes']
 
 # ===== ALLOWED HOSTS =====
-DEFAULT_ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'find-banquet.onrender.com',
-    'findmybanquet.com',
-    'www.findmybanquet.com',
-]
-ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', ','.join(DEFAULT_ALLOWED_HOSTS)).split(',')]
+# DEFAULT_ALLOWED_HOSTS = [
+#     '127.0.0.1',
+#     'localhost',
+#     'find-banquet.onrender.com',
+#     'findmybanquet.com',
+#     'www.findmybanquet.com',
+# ]
+
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # ===== CSRF TRUSTED ORIGINS =====
 CSRF_TRUSTED_ORIGINS = [
@@ -85,23 +82,17 @@ TEMPLATES = [
 ]
 
 # ===== DATABASE CONFIGURATION =====
-DATABASE_URL = os.getenv('DATABASE_URL')
 
-if ENVIRONMENT == 'local':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=True,
-        )
-    }
+
+
+DATABASES = {
+    'default': dj_database_url.parse(
+        os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
+
 
 # ===== PASSWORD VALIDATION =====
 AUTH_PASSWORD_VALIDATORS = [
@@ -131,36 +122,36 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ===== SECURITY SETTINGS =====
-if ENVIRONMENT == 'production':
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    USE_X_FORWARDED_HOST = True
-else:
-    SECURE_SSL_REDIRECT = False
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SECURE = False
+# if ENVIRONMENT == 'production':
+#     SECURE_SSL_REDIRECT = True
+#     SESSION_COOKIE_SECURE = True
+#     CSRF_COOKIE_SECURE = True
+#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#     USE_X_FORWARDED_HOST = True
+# else:
+#     SECURE_SSL_REDIRECT = False
+#     SESSION_COOKIE_SECURE = False
+#     CSRF_COOKIE_SECURE = False
 
 # ===== DEVELOPMENT SETTINGS =====
-if ENVIRONMENT in ['local', 'dev', 'development']:
-    # Rename cookies to prevent conflicts
-    SESSION_COOKIE_NAME = 'sessionid_dev'
-    CSRF_COOKIE_NAME = 'csrftoken_dev'
+# if ENVIRONMENT in ['local', 'dev', 'development']:
+#     # Rename cookies to prevent conflicts
+#     SESSION_COOKIE_NAME = 'sessionid_dev'
+#     CSRF_COOKIE_NAME = 'csrftoken_dev'
 
-    # Disable CSRF locally to avoid random 400 errors
-    MIDDLEWARE = [mw for mw in MIDDLEWARE if mw != 'django.middleware.csrf.CsrfViewMiddleware']
+#     # Disable CSRF locally to avoid random 400 errors
+#     MIDDLEWARE = [mw for mw in MIDDLEWARE if mw != 'django.middleware.csrf.CsrfViewMiddleware']
 
-    # Verbose logging for debugging
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {'console': {'class': 'logging.StreamHandler'}},
-        'loggers': {
-            'django.request': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
-            'django.security': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
-        },
-    }
+#     # Verbose logging for debugging
+#     LOGGING = {
+#         'version': 1,
+#         'disable_existing_loggers': False,
+#         'handlers': {'console': {'class': 'logging.StreamHandler'}},
+#         'loggers': {
+#             'django.request': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
+#             'django.security': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
+#         },
+#     }
 
 # ===== REDIRECT SETTINGS =====
 APPEND_SLASH = True
