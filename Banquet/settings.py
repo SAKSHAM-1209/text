@@ -26,7 +26,7 @@ DEBUG = os.getenv('DEBUG', '1').lower() in ['1', 'true', 'yes']
 #     'www.findmybanquet.com',
 # ]
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(',')]
 
 # ===== CSRF TRUSTED ORIGINS =====
 CSRF_TRUSTED_ORIGINS = [
