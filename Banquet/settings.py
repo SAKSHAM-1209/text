@@ -84,14 +84,17 @@ TEMPLATES = [
 # ===== DATABASE CONFIGURATION =====
 
 
+db_url = os.getenv('DATABASE_URL')
 
-DATABASES = {
-    'default': dj_database_url.parse(
-        os.getenv('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
+if ENVIRONMENT in ['local', 'development']:
+    DATABASES = {
+        'default': dj_database_url.parse(db_url, conn_max_age=0, ssl_require=False)
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(db_url, conn_max_age=600, ssl_require=True)
+    }
+
 
 
 # ===== PASSWORD VALIDATION =====
