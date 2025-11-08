@@ -82,18 +82,21 @@ TEMPLATES = [
 ]
 
 # ===== DATABASE CONFIGURATION =====
+db_url = os.getenv("DATABASE_URL")
 
+if not db_url:
+    raise ValueError("DATABASE_URL not found in environment variables.")
 
-db_url = os.getenv('DATABASE_URL')
+# Automatically enable SSL in production
+ssl_required = ENVIRONMENT not in ["local", "development"]
 
-if ENVIRONMENT in ['local', 'development']:
-    DATABASES = {
-        'default': dj_database_url.parse(db_url, conn_max_age=0, ssl_require=False)
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.parse(db_url, conn_max_age=600, ssl_require=True)
-    }
+DATABASES = {
+    "default": dj_database_url.config(
+        default=db_url,
+        conn_max_age=600,
+        ssl_require=ssl_required,
+    )
+}
 
 
 
