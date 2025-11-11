@@ -23,16 +23,22 @@
   {% endif %}
 
 
-<!-- ===== HEADER ===== -->
-    <header class="header">
-      <div class="container header-inner">
-        <div class="logo">Find My Banquet</div>
+ <!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo">
+      <a href="{% url 'landing' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Find My Banquet Logo" class="logo-img">
+      </a>
+    </div>
+
     <nav class="nav">
       <a href="{% url 'landing' %}">Home</a>
       <a href="{% url 'banquet' %}">Banquets</a>
       <a href="{% url 'about' %}">About</a>
       <a href="{% url 'contact' %}">Contact</a>
     </nav>
+
     <div class="auth-btns">
       <a href="{% url 'login' %}" class="login">Login</a>
       <a href="{% url 'signup' %}" class="signup">Sign Up</a>

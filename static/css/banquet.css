@@ -35,65 +35,6 @@ html, body {
     100% { background-position: 0% 50%; }
 }
 
-/* ========== HEADER ========== */
-.header {
-    background: #fff;
-    padding: 16px 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    position: sticky;
-    top: 0;
-    z-index: 1200;
-}
-
-.header-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #2563eb;
-    letter-spacing: 1px;
-}
-
-.nav a {
-    margin-left: 28px;
-    text-decoration: none;
-    color: #1f2937;
-    font-weight: 500;
-    transition: 0.3s;
-}
-
-.nav a:hover {
-    color: #2563eb;
-    transform: scale(1.05);
-}
-
-.auth-btns {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-.auth-btns a {
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: 0.3s;
-}
-
-.auth-btns a.login { background:#fff; border:2px solid #2563eb; color:#2563eb; }
-.auth-btns a.login:hover { background:#2563eb; color:#fff; transform:translateY(-2px); }
-
-.auth-btns a.signup { background:#2563eb; color:#fff; }
-.auth-btns a.signup:hover { color:#1e40af; background:#fff; border:2px solid #2563eb; transform:translateY(-2px); }
-
-.auth-btns a.schedule-call { background:#FF5722; color:#fff; }
-.auth-btns a.schedule-call:hover { background:#fff; color:#2563eb; border:2px solid #2563eb; transform:translateY(-2px); }
 
 /* ========== COMING SOON CARD ========== */
 .coming-soon-section {
@@ -117,17 +58,7 @@ html, body {
     overflow: hidden;
 }
 
-.banquet-card::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: rgba(255,255,255,0.15);
-    transform: rotate(45deg) translate(-100%,-100%);
-    transition: 0.3s;
-}
+
 
 .banquet-card:hover::before {
     transform: rotate(45deg) translate(50%,50%);
