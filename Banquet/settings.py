@@ -10,6 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ===== LOAD .env =====
 load_dotenv(os.path.join(BASE_DIR, '.env'))
+
 # ===== SECURITY =====
 SECRET_KEY = os.getenv('SECRET_KEY')
 
@@ -18,14 +19,6 @@ ENVIRONMENT = os.getenv('ENVIRONMENT', 'local').lower()  # Default to local if n
 DEBUG = os.getenv('DEBUG', '1').lower() in ['1', 'true', 'yes']
 
 # ===== ALLOWED HOSTS =====
-# DEFAULT_ALLOWED_HOSTS = [
-#     '127.0.0.1',
-#     'localhost',
-#     'find-banquet.onrender.com',
-#     'findmybanquet.com',
-#     'www.findmybanquet.com',
-# ]
-
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(',')]
 
 # ===== CSRF TRUSTED ORIGINS =====
@@ -45,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'website',  # your main app
+    'website',  # main app
 ]
 
 # ===== MIDDLEWARE =====
@@ -87,7 +80,6 @@ db_url = os.getenv("DATABASE_URL")
 if not db_url:
     raise ValueError("DATABASE_URL not found in environment variables.")
 
-# Automatically enable SSL in production
 ssl_required = ENVIRONMENT not in ["local", "development"]
 
 DATABASES = {
@@ -97,8 +89,6 @@ DATABASES = {
         ssl_require=ssl_required,
     )
 }
-
-
 
 # ===== PASSWORD VALIDATION =====
 AUTH_PASSWORD_VALIDATORS = [
@@ -127,37 +117,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # ===== DEFAULT PRIMARY KEY =====
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ===== SECURITY SETTINGS =====
-# if ENVIRONMENT == 'production':
-#     SECURE_SSL_REDIRECT = True
-#     SESSION_COOKIE_SECURE = True
-#     CSRF_COOKIE_SECURE = True
-#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#     USE_X_FORWARDED_HOST = True
-# else:
-#     SECURE_SSL_REDIRECT = False
-#     SESSION_COOKIE_SECURE = False
-#     CSRF_COOKIE_SECURE = False
-
-# ===== DEVELOPMENT SETTINGS =====
-# if ENVIRONMENT in ['local', 'dev', 'development']:
-#     # Rename cookies to prevent conflicts
-#     SESSION_COOKIE_NAME = 'sessionid_dev'
-#     CSRF_COOKIE_NAME = 'csrftoken_dev'
-
-#     # Disable CSRF locally to avoid random 400 errors
-#     MIDDLEWARE = [mw for mw in MIDDLEWARE if mw != 'django.middleware.csrf.CsrfViewMiddleware']
-
-#     # Verbose logging for debugging
-#     LOGGING = {
-#         'version': 1,
-#         'disable_existing_loggers': False,
-#         'handlers': {'console': {'class': 'logging.StreamHandler'}},
-#         'loggers': {
-#             'django.request': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
-#             'django.security': {'handlers': ['console'], 'level': 'DEBUG', 'propagate': False},
-#         },
-#     }
-
 # ===== REDIRECT SETTINGS =====
 APPEND_SLASH = True
+
+# ===== EMAIL SETTINGS =====
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Securely load credentials from environment
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
