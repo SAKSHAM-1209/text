@@ -3,27 +3,33 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Banquet, Venue, ScheduleCall, ContactMessage
 
-# ===== SIGNUP FORM =====
+
+# =====================================================
+# 🔐 SIGNUP FORM
+# =====================================================
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(
-        max_length=30, required=True,
+        max_length=30,
+        required=True,
         widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'First Name'})
     )
     last_name = forms.CharField(
-        max_length=30, required=True,
+        max_length=30,
+        required=True,
         widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Last Name'})
     )
     email = forms.EmailField(
-        max_length=254, required=True,
+        required=True,
         widget=forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Email'})
     )
 
+    # Optional Venue Info
     venue_name = forms.CharField(
-        max_length=100, required=False,
+        required=False,
         widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Banquet / Venue Name'})
     )
     venue_address = forms.CharField(
-        max_length=255, required=False,
+        required=False,
         widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Venue Address'})
     )
     venue_capacity = forms.IntegerField(
@@ -37,31 +43,39 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',
-                  'venue_name', 'venue_address', 'venue_capacity', 'venue_price')
+        fields = (
+            'username', 'first_name', 'last_name', 'email',
+            'password1', 'password2',
+            'venue_name', 'venue_address', 'venue_capacity', 'venue_price'
+        )
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Username'}),
             'password1': forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Password'}),
             'password2': forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Confirm Password'}),
         }
 
-# ===== LOGIN FORM =====
+
+# =====================================================
+# 🔑 LOGIN FORM
+# =====================================================
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
-        max_length=254, required=True,
         widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Username'})
     )
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Password'})
     )
 
-# ===== BANQUET FORM =====
+
+# =====================================================
+# 🏛 BANQUET REGISTRATION FORM
+# =====================================================
 class BanquetForm(forms.ModelForm):
     class Meta:
         model = Banquet
         fields = [
-            'banquet_name', 'owner_name', 'email', 'phone', 'capacity',
-            'location', 'google_link'
+            'banquet_name', 'owner_name', 'email',
+            'phone', 'capacity', 'location', 'google_link'
         ]
         widgets = {
             'banquet_name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Banquet Name'}),
@@ -70,10 +84,13 @@ class BanquetForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Phone'}),
             'capacity': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Capacity'}),
             'location': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Location'}),
-            'google_link': forms.URLInput(attrs={'class': 'form-input', 'placeholder': 'Google Link'}),
+            'google_link': forms.URLInput(attrs={'class': 'form-input', 'placeholder': 'Google Map Link'}),
         }
 
-# ===== SCHEDULE CALL FORM =====
+
+# =====================================================
+# 📞 SCHEDULE CALL FORM
+# =====================================================
 REASON_CHOICES = [
     ('', 'Select Reason'),
     ('Consultation', 'Consultation'),
@@ -85,7 +102,7 @@ REASON_CHOICES = [
 class ScheduleCallForm(forms.ModelForm):
     reason = forms.ChoiceField(
         choices=REASON_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-input', 'id': 'reason'})
+        widget=forms.Select(attrs={'class': 'form-input'})
     )
 
     class Meta:
@@ -93,14 +110,21 @@ class ScheduleCallForm(forms.ModelForm):
         fields = ['name', 'email', 'phone', 'date', 'time_slot', 'reason', 'notes']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Your Name'}),
-            'email': forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Email Address'}),
-            'phone': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Phone Number'}),
+            'email': forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Email'}),
+            'phone': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Phone'}),
             'date': forms.DateInput(attrs={'class': 'form-input', 'type': 'date'}),
-            'time_slot': forms.Select(attrs={'class': 'form-input', 'id': 'timeSlot'}),
-            'notes': forms.Textarea(attrs={'class': 'form-input', 'rows': 3, 'placeholder': 'Additional Notes (optional)'}),
+            'time_slot': forms.Select(attrs={'class': 'form-input'}),
+            'notes': forms.Textarea(attrs={
+                'class': 'form-input',
+                'rows': 3,
+                'placeholder': 'Additional Notes (optional)'
+            }),
         }
 
-# ===== CONTACT MESSAGE FORM =====
+
+# =====================================================
+# 📩 CONTACT MESSAGE FORM
+# =====================================================
 class ContactMessageForm(forms.ModelForm):
     SUBJECT_CHOICES = [
         ('', 'Select a subject *'),
@@ -127,8 +151,8 @@ class ContactMessageForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Phone Number'}),
             'message': forms.Textarea(attrs={
                 'class': 'form-textarea',
-                'placeholder': 'Message * (max 500 characters)',
                 'rows': 4,
-                'maxlength': 500
+                'maxlength': 500,
+                'placeholder': 'Message * (max 500 characters)'
             }),
         }

@@ -15,11 +15,11 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # ===== ENVIRONMENT & DEBUG =====
-ENVIRONMENT = os.getenv('ENVIRONMENT', 'local').lower()  # Default to local if not set
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'local').lower()
 DEBUG = os.getenv('DEBUG', '1').lower() in ['1', 'true', 'yes']
 
 # ===== ALLOWED HOSTS =====
-ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(',')]
+ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')]
 
 # ===== CSRF TRUSTED ORIGINS =====
 CSRF_TRUSTED_ORIGINS = [
@@ -76,7 +76,6 @@ TEMPLATES = [
 
 # ===== DATABASE CONFIGURATION =====
 db_url = os.getenv("DATABASE_URL")
-
 if not db_url:
     raise ValueError("DATABASE_URL not found in environment variables.")
 
@@ -120,12 +119,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ===== REDIRECT SETTINGS =====
 APPEND_SLASH = True
 
-# ===== EMAIL SETTINGS =====
+# =======================
+# 📧 EMAIL SETTINGS (Gmail SMTP)
+# =======================
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-# Securely load credentials from environment
+
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', 'findmybanquetofficial@gmail.com')
